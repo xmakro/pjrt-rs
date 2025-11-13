@@ -63,7 +63,7 @@ impl Api {
         let name = name.as_ref().as_bytes();
         let create_options: Vec<PJRT_NamedValue> = options.iter().map(Into::into).collect();
         let mut args = PJRT_TopologyDescription_Create_Args::new();
-        args.topology_name = name.as_ptr() as *const i8;
+        args.topology_name = name.as_ptr() as *const u8;
         args.topology_name_size = name.len();
         args.create_options = create_options.as_ptr();
         args.num_options = create_options.len();
@@ -141,7 +141,7 @@ impl CompileToExecutable<Program> for Api {
         let mut args = PJRT_Compile_Args::new();
         args.topology = topology.ptr;
         args.program = &program.prog as *const PJRT_Program;
-        args.compile_options = options_encoded.as_ptr() as *const i8;
+        args.compile_options = options_encoded.as_ptr() as *const u8;
         args.compile_options_size = options_encoded.len();
         if let Some(client) = client {
             args.client = client.ptr();

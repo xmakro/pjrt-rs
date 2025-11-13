@@ -52,10 +52,10 @@ impl Program {
             code: code.into(),
             prog: PJRT_Program::new(),
         };
-        program.prog.code = program.code.as_ptr() as *mut i8;
+        program.prog.code = program.code.as_ptr() as *mut u8;
         program.prog.code_size = program.code.len();
         let format = program.format.as_bytes();
-        program.prog.format = format.as_ptr() as *const i8;
+        program.prog.format = format.as_ptr() as *const u8;
         program.prog.format_size = format.len();
         program
     }
