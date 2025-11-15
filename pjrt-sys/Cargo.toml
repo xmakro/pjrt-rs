@@ -18,4 +18,3 @@ prost-types = { workspace = true }
 [build-dependencies]
 bindgen = { workspace = true }
 prost-build = { workspace = true }
-protoc-bin-vendored = { workspace = true }
