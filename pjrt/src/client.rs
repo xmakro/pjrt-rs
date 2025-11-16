@@ -170,11 +170,14 @@ impl Client {
         CompileToLoadedExecutable::<T>::compile(self, program, &options)
     }
 
-    pub fn load_executable(&self, bytes: &[u8]) -> Result<LoadedExecutable> {
+    pub fn load_executable(&self, bytes: &[u8], options: &CompileOptions) -> Result<LoadedExecutable> {
+        let options_encoded = options.encode();
         let mut args = PJRT_Executable_DeserializeAndLoad_Args::new();
         args.client = self.ptr();
         args.serialized_executable = bytes.as_ptr() as *const u8;
         args.serialized_executable_size = bytes.len();
+        args.overridden_serialized_compile_options = options_encoded.as_ptr() as *const u8;
+        args.overridden_serialized_compile_options_size = options_encoded.len();
         args = self.api().PJRT_Executable_DeserializeAndLoad(args)?;
         Ok(LoadedExecutable::wrap(self, args.loaded_executable))
     }
